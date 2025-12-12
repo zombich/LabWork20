@@ -1,0 +1,16 @@
+﻿<Window x:Class="FilmsApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FilmsApp"
+        mc:Ignorable="d"
+        Title="6 кадров" Height="250" Width="500" FontSize="16" Loaded="Window_Loaded">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <DockPanel Width="350">
+            <Label>Фильм:</Label>
+            <ComboBox x:Name="FilmListBox" DisplayMemberPath="Name"/>
+        </DockPanel>
+        <Button Click="AddFrameButton_Click">Добавить кадр</Button>
+    </StackPanel>
+</Window>
