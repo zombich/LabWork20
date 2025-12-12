@@ -3,7 +3,6 @@ using FilmsLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace FilmsApp
@@ -27,7 +26,7 @@ namespace FilmsApp
                 return;
 
             var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = " Файл .PNG(*.png)|*.png|Файл .JPG (*.jpg)|*.jpg";
+            openFileDialog.Filter = "Файл .PNG(*.png)|*.png|Файл .JPG (*.jpg)|*.jpg";
 
             if (openFileDialog.ShowDialog() == false)
                 return;
@@ -57,14 +56,22 @@ namespace FilmsApp
                 return;
             }
 
-            var frame = new Frame 
-            { 
+            var frame = new Frame
+            {
                 FilmId = selectedFilm.FilmId,
                 FileName = openFileDialog.SafeFileName
             };
 
-            _context.Frames.Add(frame);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Frames.Add(frame);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось сохранить файл", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             MessageBox.Show("Файл сохранен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
         }
