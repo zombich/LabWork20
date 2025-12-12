@@ -12,5 +12,6 @@
             <ComboBox x:Name="FilmListBox" DisplayMemberPath="Name"/>
         </DockPanel>
         <Button Click="AddFrameButton_Click">Добавить кадр</Button>
+        <Button Click="AddPosterButton_Click">Добавить постер</Button>
     </StackPanel>
 </Window>

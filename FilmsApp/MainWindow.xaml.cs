@@ -82,5 +82,42 @@ namespace FilmsApp
             FilmListBox.ItemsSource = films;
             FilmListBox.SelectedItem = films.FirstOrDefault();
         }
+
+        private async void AddPosterButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedFilm = FilmListBox.SelectedItem as Film;
+
+            if (selectedFilm is null)
+                return;
+
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Файл .PNG(*.png)|*.png|Файл .JPG (*.jpg)|*.jpg";
+
+            if (openFileDialog.ShowDialog() == false)
+                return;
+
+            var fileInfo = new FileInfo(openFileDialog.FileName);
+
+            if (fileInfo.Length >> 20 > 3)
+            {
+                MessageBox.Show("Файл слишком большой", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                byte[] fileBytes = File.ReadAllBytes(openFileDialog.FileName);
+                selectedFilm.Poster = fileBytes;
+
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось сохранить файл", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            MessageBox.Show("Файл сохранен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
